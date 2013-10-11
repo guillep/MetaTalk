@@ -1,19 +1,21 @@
 String
-	superclass: #Object;
-	instanceSpecification: #(#variable #byte ).
+    superclass: #Object;
+    instanceSpecification: #(#variable #byte ).
 
-String >> add: aChar [
-	super add: (aChar asCharacter)
+
+String >> at: index [
+    <primitive: 63>
 ]
 
 String >> at: index put: aChar [
-	super at: index put: (aChar asCharacter)
+    <primitive: 64>
 ]
 
 String >> print [
-	<PrimitiveCall stringPrint>
+    "Should fix this maybe"
+    <PrimitiveCall stringPrint>
 ]
 
 String >> asString [
-	^ self
+    ^ self
 ]
