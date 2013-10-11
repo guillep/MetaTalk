@@ -1,63 +1,105 @@
 Number
-	superclass: #Object;
-	instanceSpecification: #(#pointers #words ).
-
-Number >> initialize [
-	<PrimitiveCall numberInitialize>
-]
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words ).
 
 Number >> = aMagnitude [ 
-	<PrimitiveCall numberEq>
+    <primitive: 7>
 ]
 
 Number >> + aNumber [
-	<PrimitiveCall numberAdd>
+    <primitive: 1>
 ]
 
 Number >> - aNumber [
-	<PrimitiveCall numberSub>
+    <primitive: 2>
 ]
 
 Number >> / aNumber  [
-	<PrimitiveCall numberDiv>
+    <primitive: 10>
+]
+
+Number >> // aNumber  [
+    <primitive: 12>
 ]
 
 Number >> * aNumber [
-	<PrimitiveCall numberMul>
+    <primitive: 9>
 ]
 
 Number >> < aNumber [
-	<PrimitiveCall numberLt>
+    <primitive: 3>
 ]
 
 Number >> > aNumber [
-	<PrimitiveCall numberGt>
+    <primitive: 4>
 ]
 
 Number >> floor [
-	<PrimitiveCall numberFloor>
+    <PrimitiveCall numberFloor>
 ]
 
 Number >> ceil [
-	<PrimitiveCall numberCeil>
+    <PrimitiveCall numberCeil>
 ]
 
 Number >> to: aNumber [
-	|iterator end list|
-	list := {}.
-	iterator := self.
-	end := aNumber asNumber.
-	[iterator < (end + 1).] whileTrue: [
-		list add: iterator.
-		iterator := iterator + 1.
-	].
-	^ list.
+    |iterator end list|
+    list := {}.
+    iterator := self.
+    end := aNumber asNumber.
+    [iterator < (end + 1).] whileTrue: [
+        list add: iterator.
+        iterator := iterator + 1.
+    ].
+    ^ list.
 ]
 
 Number >> asNumber [
-	^ self
+    ^ self
+]
+
+Number >> negated [
+	^ 0 - self
 ]
 
 Number >> asString [
-	<PrimitiveCall numberAsString>
+    "Highly optimized version for base 10
+    and that we know it is a SmallInteger."
+    
+    | integer next result len |
+    self = 0 ifTrue: [^'0'].
+	self < 0 ifTrue: [^'-', self negated printString].
+    len := self decimalDigitLength.
+    result := String new: len.
+    integer := self.
+    len to: 1 by: -1 do: [:i |
+        next := integer // 10.
+        result byteAt: i put: 48 + (integer - (next * 10)).
+        integer := next].
+    ^result
+]
+
+Number >> decimalDigitLength [
+    "Answer the number of digits printed out in base 10.
+    Note that this only works for positive SmallIntegers."
+    
+    ^ self < 10000
+        ifTrue: [self < 100
+                ifTrue: [self < 10
+                        ifTrue: [1]
+                        ifFalse: [2]]
+                ifFalse: [self < 1000
+                        ifTrue: [3]
+                        ifFalse: [4]]]
+        ifFalse: [self < 1000000
+                ifTrue: [self < 100000
+                        ifTrue: [5]
+                        ifFalse: [6]]
+                ifFalse: [self < 100000000
+                        ifTrue: [self < 10000000
+                                ifTrue: [7]
+                                ifFalse: [8]]
+                        ifFalse: [self < 1000000000
+                                ifTrue: [9]
+                                ifFalse: [10]]]]
 ]
