@@ -96,4 +96,6 @@ List >> asString [
     ^ str , ''}''.
 ]
 
-List >> asList [^ self.]
+List >> asList [
+    ^ self.
+]
