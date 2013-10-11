@@ -1,33 +1,33 @@
 True
-	superclass: #Boolean;
+    superclass: #Boolean;
 
 True >> initialize [
 ]
 
 True >> | aBoolean [
-	^ true
+    ^ true
 ]
 
 True >> & aBoolean [
-	^ aBoolean
+    ^ aBoolean
 ]
 
 True >> not [
-	^ false
+    ^ false
 ]
 
 True >> ifTrue: aBlock [
-	^ aBlock value
+    ^ aBlock value
 ]
 
 True >> ifFalse: aBlock [
-	^ nil
+    ^ nil
 ]
 
 True >> ifTrue: aBlock ifFalse: anotherBlock [
-	^ aBlock value
+    ^ aBlock value
 ]
 
 True >> asString [
-	^ 'true'
+    ^ 'true'
 ]
