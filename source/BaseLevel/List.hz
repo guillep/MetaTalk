@@ -1,19 +1,34 @@
 List
     superclass: #Object;
     instanceSpecification: #(#pointers #words );
-    instanceVariables: #().
+    instanceVariables: #(#head #tail).
 
 
 List >> initialize [
-    <PrimitiveCall listInitialize>
+    head := nil.
+	tail := nil.
 ]
 
 List >> size [
-    <PrimitiveCall listSize>
+	| currentNode size |
+	head == nil ifTrue: [ ^ 0 ].
+	tail == nil ifTrue: [ ^ 1 ].
+	^ 1 + tail size.
+]
+
+List >> isEmpty [
+    ^ self size == 0
+]
+
+List >> tail [
+    ^ tail
 ]
 
 List >> add: anObject [
-    <PrimitiveCall listAdd>
+    | newTail |
+	self isEmpty ifTrue: [ head := anObject ].
+	tail == nil ifTrue: [ tail := anObject asList ].
+	tail add: anObject.
 ]
 
 List >> remove: anObject [
@@ -30,11 +45,13 @@ List >> indexOf: anObject [
 ]
     
 List >> at: index [
-    <PrimitiveCall listAt>
+    index = 1 ifTrue: [ ^ head ].
+	^ tail at: index - 1
 ]
 
 List >> at: index put: anObject [
-    <PrimitiveCall listAtPut>
+    index = 1 ifTrue: [ head := anObject ].
+	^ tail at: index - 1 put: anObject.
 ]
 
 List >> = aList [
