@@ -1,29 +1,29 @@
 Point
-	superclass: #Object;
-	instanceSpecification: #(#pointers #words );
-	instanceVariables: #(#x #y ).
-	
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words );
+    instanceVariables: #(#x #y ).
+    
 Point >> initialize [
-	x := 0.
-	y := 0
+    x := 0.
+    y := 0
 ]
 
 Point >> x [
-	^ x
+    ^ x
 ]
 
 Point >> y [
-	^ y
+    ^ y
 ]
 
 Point >> x: aNumber [
-	x := aNumber asNumber
+    x := aNumber asNumber
 ]
 
 Point >> y: aNumber [
-	y := aNumber asNumber
+    y := aNumber asNumber
 ]
 
 Point >> asString [
-	^ x asString , ''@'' , y asString
+    ^ x asString , '@' , y asString
 ]

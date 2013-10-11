@@ -1,21 +1,21 @@
 Point3D
-	superclass: #Point;
-	instanceSpecification: #(#pointers #words );
-	instanceVariables: #(#z).
-	
+    superclass: #Point;
+    instanceSpecification: #(#pointers #words );
+    instanceVariables: #(#z).
+    
 Point3D >> initialize [
-	super initialize.
-	z := 0
+    super initialize.
+    z := 0
 ]
 
 Point3D >> z [
-	^ z
+    ^ z
 ]
 
 Point3D >> z: aNumber [
-	z := aNumber asNumber
+    z := aNumber asNumber
 ]
 
 Point3D >> asString [
-	^ super asString , '@' , z asString
+    ^ super asString , '@' , z asString
 ]
