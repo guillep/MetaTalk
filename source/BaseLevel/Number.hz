@@ -68,7 +68,7 @@ Number >> asString [
     
     | integer next result len |
     self = 0 ifTrue: [^'0'].
-	self < 0 ifTrue: [^'-', self negated printString].
+	self < 0 ifTrue: [^'-', self negated asString].
     len := self decimalDigitLength.
     result := String new: len.
     integer := self.
