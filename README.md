@@ -1,4 +1,4 @@
-PharoCandle
+MetaTalk
 ===========
 
 	WARNING: This project contains the current development branch of PharoCandle.
