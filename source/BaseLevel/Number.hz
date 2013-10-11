@@ -1,0 +1,27 @@
+Number = Object [
+
+	initialize := [^ <PrimitiveCall numberInitialize>.]
+	= aMagnitude := [^ <PrimitiveCall numberEq>.]
+	+ aNumber := [^ <PrimitiveCall numberAdd>.]
+	- aNumber := [^ <PrimitiveCall numberSub>.]
+	/ aNumber  := [^ <PrimitiveCall numberDiv>.]
+	* aNumber := [^ <PrimitiveCall numberMul>.]
+	< aNumber := [^ <PrimitiveCall numberLt>.]
+	> aNumber := [^ <PrimitiveCall numberGt>.]
+	floor := [^ <PrimitiveCall numberFloor>.]
+	ceil := [^ <PrimitiveCall numberCeil>.]
+	to: aNumber := [
+		|iterator end list|
+		list := {}.
+		iterator := self.
+		end := aNumber asNumber.
+		[iterator < (end + 1).] whileTrue: [
+			list add: iterator.
+			iterator := iterator + 1.
+		].
+		^ list.
+	]
+	asNumber := [^ self.]
+	asString := [^ <PrimitiveCall numberAsString>.]
+	
+]

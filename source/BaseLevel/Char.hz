@@ -1,0 +1,6 @@
+Char = Number [
+	
+	asCharacter := [^ self.]
+	asString := [^ String new add: self.]
+	
+]

@@ -1,0 +1,5 @@
+Boolean = Object [
+
+	initialize := [^ False new.]	
+
+]

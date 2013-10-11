@@ -1,0 +1,8 @@
+String = List [
+
+	add: aChar := [super add: (aChar asCharacter).]
+	at: index put: aChar := [super at: index put: (aChar asCharacter).]
+	print := [<PrimitiveCall stringPrint>.]
+	asString := [^ self.]
+	
+]

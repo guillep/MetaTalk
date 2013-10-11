@@ -1,0 +1,3 @@
+Base = Object [
+	reflect: aBoolean := [^<PrimitiveCall baseReflect>.]
+]

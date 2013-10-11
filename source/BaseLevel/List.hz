@@ -1,0 +1,63 @@
+List = Object [
+
+	initialize := [^ <PrimitiveCall listInitialize>.]	
+	size := [^ <PrimitiveCall listSize>.]
+	add: anObject := [<PrimitiveCall listAdd>.]
+	remove: anObject := [<PrimitiveCall listRemove>.]
+	
+	indexOf: anObject := [
+		self indexAndValuesDo: [:index :value |
+			(value = anObject) ifTrue: [
+				^ index.	
+			].
+		].
+		^ nil.
+	]
+	
+	at: index := [^ <PrimitiveCall listAt>.]
+	at: index put: anObject := [<PrimitiveCall listAtPut>.]
+	= aList := [
+		|list|
+		list := aList asList.
+		(self size = list size) ifFalse: [^ false.].
+		self indexAndValuesDo: [:index :value |
+			(value = (list at: index)) ifFalse: [
+				^ false.	
+			].
+		].
+		^ true.
+	]
+	
+	, aList := [
+		^ <PrimitiveCall listConCat>.
+	]
+	
+	
+	do: aBlock := [
+		|size iterator|
+		size := self size.
+		iterator := 1.
+		[(iterator = (size+1)) not.] whileTrue: [
+			aBlock valueWithArgs: {self at: iterator.}.
+			iterator := iterator + 1.
+		].
+	]
+	
+	indexAndValuesDo: aBlock := [
+		|index|
+		index := 1.
+		self do: [:value |
+			aBlock valueWithArgs: {index. value.}.
+			index := index + 1.
+		].	
+	]
+
+	asString := [
+		|str|
+		str := ''{ ''.
+		self do: [:item | str := str , item asString , ''. ''.].
+		^ str , ''}''.
+	]
+
+	asList := [^ self.]
+]

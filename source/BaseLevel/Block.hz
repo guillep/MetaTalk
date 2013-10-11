@@ -1,0 +1,13 @@
+Block = Object [
+
+	initialize := [^ <PrimitiveCall blockInitialize>.]
+	value := [^ <PrimitiveCall blockValue>.]	
+	valueWithArgs: aList := [^ <PrimitiveCall blockValueWithArgs>.]
+	whileTrue: aBlock := [
+		self value ifTrue: [
+			aBlock value.
+			self whileTrue: aBlock.
+		].
+	]
+	
+]

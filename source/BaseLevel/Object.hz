@@ -1,0 +1,11 @@
+Object = nil [
+
+	initialize := []
+	= anObject := [^ self == anObject.]
+	== anObject := [^ <PrimitiveCall objEq>.]
+	copy := [^ <PrimitiveCall objCopy>.]
+	asString := [^ ''''.]
+	asList := [^ {self.}.]
+	print := [self asString print.]
+
+]

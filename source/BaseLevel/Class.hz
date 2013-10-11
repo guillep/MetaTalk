@@ -1,0 +1,9 @@
+Class = Object [
+	
+	initialize := [^ <PrimitiveCall classInitialize>.]
+	allocate := [^ <PrimitiveCall classAllocate>.]
+	new := [
+		^self allocate initialize.
+	]
+	
+]

@@ -1,0 +1,5 @@
+UndefinedObject = Object [
+	
+	asString := [^ ''nil''.]	
+	
+]

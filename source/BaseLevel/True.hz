@@ -1,0 +1,12 @@
+True = Boolean [
+
+	initialize := []	
+	| aBoolean := [^ true.]
+	& aBoolean := [^ aBoolean.]
+	not := [^ false.]
+	ifTrue: aBlock := [^ aBlock value.]
+	ifFalse: aBlock := [^ nil.]
+	ifTrue: aBlock ifFalse: anotherBlock := [^ aBlock value.]
+	asString := [^ ''true''.]
+	
+]

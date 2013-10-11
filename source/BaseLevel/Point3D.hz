@@ -1,0 +1,10 @@
+Point3D = Point [
+
+	|z|
+	
+	initialize := [super initialize. z := 0.]
+	z := [^ z.]
+	z: aNumber := [z := aNumber asNumber.]
+	asString := [^ super asString , ''@'' , z asString.]
+	
+]
