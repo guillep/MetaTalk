@@ -1,5 +1,5 @@
 Char
-    superclass: #Number;
+    superclass: #Object;
     instanceSpecification: #(#pointers #words );
     instanceVariables: #(#value ).
 
