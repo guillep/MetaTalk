@@ -1,33 +1,33 @@
 False
-	superclass: #Boolean;
+    superclass: #Boolean;
 
 False >> initialize [
 ]
 
 False >> | aBoolean [
-	^ aBoolean
+    ^ aBoolean
 ]
 
 False >> & aBoolean [
-	^ false
+    ^ false
 ]
 
 False >> not [
-	^ true
+    ^ true
 ]
 
 False >> ifTrue: aBlock [
-	^ nil
+    ^ nil
 ]
 
 False >> ifFalse: aBlock [
-	^ aBlock value
+    ^ aBlock value
 ]
 
 False >> ifTrue: aBlock ifFalse: anotherBlock [
-	^ anotherBlock value
+    ^ anotherBlock value
 ]
 
 False >> asString [
-	^ 'false'
+    ^ 'false'
 ]
