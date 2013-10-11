@@ -1,0 +1,15 @@
+Array
+    superclass: #Object;
+    instanceSpecification: #(#variable #pointers #words ).
+    
+Array >> at: index [
+    <primitive: 60>
+]
+        
+Array >> at: index put: anObject [
+    <primitive: 61>
+]
+
+Array >> size [
+    <primitive: 62>
+]
