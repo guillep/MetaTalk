@@ -6,14 +6,14 @@ List
 
 List >> initialize [
     head := nil.
-	tail := nil.
+    tail := nil.
 ]
 
 List >> size [
-	| currentNode size |
-	head == nil ifTrue: [ ^ 0 ].
-	tail == nil ifTrue: [ ^ 1 ].
-	^ 1 + tail size.
+    | currentNode size |
+    head == nil ifTrue: [ ^ 0 ].
+    tail == nil ifTrue: [ ^ 1 ].
+    ^ 1 + tail size.
 ]
 
 List >> isEmpty [
@@ -26,9 +26,9 @@ List >> tail [
 
 List >> add: anObject [
     | newTail |
-	self isEmpty ifTrue: [ head := anObject ].
-	tail == nil ifTrue: [ tail := anObject asList ].
-	tail add: anObject.
+    self isEmpty ifTrue: [ head := anObject ].
+    tail == nil ifTrue: [ tail := anObject asList ].
+    tail add: anObject.
 ]
 
 List >> remove: anObject [
@@ -46,12 +46,12 @@ List >> indexOf: anObject [
     
 List >> at: index [
     index = 1 ifTrue: [ ^ head ].
-	^ tail at: index - 1
+    ^ tail at: index - 1
 ]
 
 List >> at: index put: anObject [
     index = 1 ifTrue: [ head := anObject ].
-	^ tail at: index - 1 put: anObject.
+    ^ tail at: index - 1 put: anObject.
 ]
 
 List >> = aList [
