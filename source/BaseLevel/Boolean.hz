@@ -1,7 +1,3 @@
 Boolean
-	superclass: #Object;
-	instanceSpecification: #(#pointers #words ).
-
-Boolean >> initialize [
-	^ False new
-]
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words ).
