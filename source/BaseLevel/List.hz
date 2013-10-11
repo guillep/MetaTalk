@@ -10,7 +10,6 @@ List >> initialize [
 ]
 
 List >> size [
-    | currentNode size |
     head == nil ifTrue: [ ^ 0 ].
     tail == nil ifTrue: [ ^ 1 ].
     ^ 1 + tail size.
@@ -18,6 +17,10 @@ List >> size [
 
 List >> isEmpty [
     ^ self size == 0
+]
+
+List >> head [
+    ^ head
 ]
 
 List >> tail [
@@ -32,7 +35,11 @@ List >> add: anObject [
 ]
 
 List >> remove: anObject [
-    <PrimitiveCall listRemove>
+    tail head == anObject ifTrue: [ 
+		tail := tail tail.
+		^ self
+	].
+	tail remove: anObject.
 ]
     
 List >> indexOf: anObject [
@@ -67,9 +74,17 @@ List >> = aList [
 ]
     
 List >> , aList [
-    <PrimitiveCall listConCat>
+    | newList |
+	newList := aList copy.
+	newList basicAddAll: aList copy.
+	^ newList
 ]
-    
+
+List >> basicAddAll: aList [
+	tail == nil ifTrue: [ tail := aList. ^ self ].
+    self tail basicAddAll: aList.
+]
+   
 List >> do: aBlock [
     |size iterator|
     size := self size.
@@ -91,9 +106,9 @@ List >> indexAndValuesDo: aBlock [
 
 List >> asString [
     |str|
-    str := ''{ ''.
-    self do: [:item | str := str , item asString , ''. ''.].
-    ^ str , ''}''.
+    str := '{ '.
+    self do: [:item | str := str , item asString , '. '.].
+    ^ str , '}'.
 ]
 
 List >> asList [

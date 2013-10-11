@@ -3,5 +3,6 @@ Base
 	instanceSpecification: #(#pointers #words ).
 	
 Base >> reflect: aBoolean [
-	<PrimitiveCall baseReflect>.
+	"<PrimitiveCall baseReflect>"
+	^self
 ]

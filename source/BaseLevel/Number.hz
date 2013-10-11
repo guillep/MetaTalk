@@ -34,14 +34,6 @@ Number >> > aNumber [
     <primitive: 4>
 ]
 
-Number >> floor [
-    <PrimitiveCall numberFloor>
-]
-
-Number >> ceil [
-    <PrimitiveCall numberCeil>
-]
-
 Number >> to: aNumber [
     |iterator end list|
     list := {}.

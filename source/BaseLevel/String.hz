@@ -13,7 +13,7 @@ String >> at: index put: aChar [
 
 String >> print [
     "Should fix this maybe"
-    <PrimitiveCall stringPrint>
+    "<PrimitiveCall stringPrint>"
 ]
 
 String >> asString [
