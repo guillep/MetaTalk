@@ -1,82 +1,82 @@
 List
-	superclass: #Object;
-	instanceSpecification: #(#pointers #words );
-	instanceVariables: #().
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words );
+    instanceVariables: #().
 
 
 List >> initialize [
-	<PrimitiveCall listInitialize>
+    <PrimitiveCall listInitialize>
 ]
 
 List >> size [
-	<PrimitiveCall listSize>
+    <PrimitiveCall listSize>
 ]
 
 List >> add: anObject [
-	<PrimitiveCall listAdd>
+    <PrimitiveCall listAdd>
 ]
 
 List >> remove: anObject [
-	<PrimitiveCall listRemove>
+    <PrimitiveCall listRemove>
 ]
-	
+    
 List >> indexOf: anObject [
-	self indexAndValuesDo: [:index :value |
-		(value = anObject) ifTrue: [
-			^ index.	
-		].
-	].
-	^ nil.
+    self indexAndValuesDo: [:index :value |
+        (value = anObject) ifTrue: [
+            ^ index.    
+        ].
+    ].
+    ^ nil.
 ]
-	
+    
 List >> at: index [
-	<PrimitiveCall listAt>
+    <PrimitiveCall listAt>
 ]
 
 List >> at: index put: anObject [
-	<PrimitiveCall listAtPut>
+    <PrimitiveCall listAtPut>
 ]
 
 List >> = aList [
-	|list|
-	list := aList asList.
-	(self size = list size) ifFalse: [^ false.].
-	self indexAndValuesDo: [:index :value |
-		(value = (list at: index)) ifFalse: [
-			^ false.	
-		].
-	].
-	^ true.
+    |list|
+    list := aList asList.
+    (self size = list size) ifFalse: [^ false.].
+    self indexAndValuesDo: [:index :value |
+        (value = (list at: index)) ifFalse: [
+            ^ false.    
+        ].
+    ].
+    ^ true.
 ]
-	
+    
 List >> , aList [
-	<PrimitiveCall listConCat>
+    <PrimitiveCall listConCat>
 ]
-	
+    
 List >> do: aBlock [
-	|size iterator|
-	size := self size.
-	iterator := 1.
-	[(iterator = (size+1)) not.] whileTrue: [
-		aBlock valueWithArgs: {self at: iterator.}.
-		iterator := iterator + 1.
-	].
+    |size iterator|
+    size := self size.
+    iterator := 1.
+    [(iterator = (size+1)) not.] whileTrue: [
+        aBlock valueWithArgs: {self at: iterator.}.
+        iterator := iterator + 1.
+    ].
 ]
-	
+    
 List >> indexAndValuesDo: aBlock [
-	|index|
-	index := 1.
-	self do: [:value |
-		aBlock valueWithArgs: {index. value.}.
-		index := index + 1.
-	].	
+    |index|
+    index := 1.
+    self do: [:value |
+        aBlock valueWithArgs: {index. value.}.
+        index := index + 1.
+    ].    
 ]
 
 List >> asString [
-	|str|
-	str := ''{ ''.
-	self do: [:item | str := str , item asString , ''. ''.].
-	^ str , ''}''.
+    |str|
+    str := ''{ ''.
+    self do: [:item | str := str , item asString , ''. ''.].
+    ^ str , ''}''.
 ]
 
 List >> asList [^ self.]
