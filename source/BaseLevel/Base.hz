@@ -1,3 +1,7 @@
-Base = Object [
-	reflect: aBoolean := [^<PrimitiveCall baseReflect>.]
+Base
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words ).
+	
+Base >> reflect: aBoolean [
+	<PrimitiveCall baseReflect>.
 ]

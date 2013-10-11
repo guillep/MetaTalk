@@ -1,12 +1,33 @@
-False = Boolean [
-	
-	initialize := []
-	| aBoolean := [^ aBoolean.]
-	& aBoolean := [^ false.]
-	not := [^ true.]
-	ifTrue: aBlock := [^ nil.]
-	ifFalse: aBlock := [^ aBlock value.]
-	ifTrue: aBlock ifFalse: anotherBlock := [^ anotherBlock value.]
-	asString := [^ ''false''.]
-	
+False
+	superclass: #Boolean;
+
+False >> initialize [
+]
+
+False >> | aBoolean [
+	^ aBoolean
+]
+
+False >> & aBoolean [
+	^ false
+]
+
+False >> not [
+	^ true
+]
+
+False >> ifTrue: aBlock [
+	^ nil
+]
+
+False >> ifFalse: aBlock [
+	^ aBlock value
+]
+
+False >> ifTrue: aBlock ifFalse: anotherBlock [
+	^ anotherBlock value
+]
+
+False >> asString [
+	^ 'false'
 ]

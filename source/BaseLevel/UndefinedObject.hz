@@ -1,5 +1,7 @@
-UndefinedObject = Object [
+UndefinedObject
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words ).
 	
-	asString := [^ ''nil''.]	
-	
+UndefinedObject >> asString [
+	^ 'nil'
 ]

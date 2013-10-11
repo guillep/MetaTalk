@@ -1,71 +1,70 @@
-Dict = List [
+Dict
+	superclass: #List.
 
-	add: aKeyValueList := [
-		(aKeyValueList asList size = 2)	ifTrue: [
-				super add: aKeyValueList.
-		] ifFalse: [
-				^ nil.
+Dict >> add: aKeyValueList [
+	(aKeyValueList asList size = 2)	ifTrue: [
+			super add: aKeyValueList.
+	] ifFalse: [
+			^ nil.
+	].
+]
+
+Dict >> remove: aKey [
+	self do: [:value | 
+		((value at: 1) = aKey) ifTrue: [
+			super remove: value.
+			^ value.
 		].
-	]
+	].	
+]
 
-	remove: aKey := [
-		self do: [:value | 
-			((value at: 1) = aKey) ifTrue: [
-				super remove: value.
-				^ value.
-			].
-		].	
-	]
-
-	keyOf: aValue := [
-		self do: [:value | 
-			((value at: 2) = value) ifTrue: [
-				^ value at: 1.
-			].
+Dict >> keyOf: aValue [
+	self do: [:value | 
+		((value at: 2) = value) ifTrue: [
+			^ value at: 1.
 		].
-		^ nil.	
-	]
+	].
+	^ nil.	
+]
 
-	atKey: aKey := [
-		self do: [:value | 
-			((value at: 1) = aKey) ifTrue: [
-				^ value at: 2.
-			].
+Dict >> atKey: aKey [
+	self do: [:value | 
+		((value at: 1) = aKey) ifTrue: [
+			^ value at: 2.
 		].
-		^ nil.
-	]
+	].
+	^ nil.
+]
 
-	atKey: aKey put: aValue := [
-		self do: [:value | 
-			((value at: 1) = aKey) ifTrue: [
-				value at: 2 put: aValue.
-			].
+Dict >> atKey: aKey put: aValue [
+	self do: [:value | 
+		((value at: 1) = aKey) ifTrue: [
+			value at: 2 put: aValue.
 		].
-		self add: {aKey. aValue.}.
-	]
+	].
+	self add: {aKey. aValue.}.
+]
 
-	keysAndValuesDo: aBlock := [
-		self do: [:value | 
-			aBlock valueWithArgs: value.
-		].		
-	]
+Dict >> keysAndValuesDo: aBlock [
+	self do: [:value | 
+		aBlock valueWithArgs: value.
+	].		
+]
 	
-	keys := [
-		|keysList|
-		keysList := List new.
-		self do: [:value |
-			keysList add: (value at: 1).
-		].
-		^ keysList.	
-	]
+Dict >> keys [
+	|keysList|
+	keysList := List new.
+	self do: [:value |
+		keysList add: (value at: 1).
+	].
+	^ keysList.	
+]
 
-	values := [
-		|valueList|
-		valueList := List new.
-		self do: [:value |
-			valueList add: (value at: 2).
-		].
-		^ valueList.			
-	]
-
+Dict >> values [
+	|valueList|
+	valueList := List new.
+	self do: [:value |
+		valueList add: (value at: 2).
+	].
+	^ valueList.			
 ]

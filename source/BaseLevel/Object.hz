@@ -1,11 +1,30 @@
-Object = nil [
+Object
+	superclass: nil;
+	instanceSpecification: #(#pointers #words ).
+	
+Object >> initialize [
+]
 
-	initialize := []
-	= anObject := [^ self == anObject.]
-	== anObject := [^ <PrimitiveCall objEq>.]
-	copy := [^ <PrimitiveCall objCopy>.]
-	asString := [^ ''''.]
-	asList := [^ {self.}.]
-	print := [self asString print.]
+Object >> = anObject [
+	^ self == anObject
+]
 
+Object >> == anObject [
+	<PrimitiveCall objEq>
+]
+
+Object >> copy [
+	<PrimitiveCall objCopy>
+]
+
+Object >> asString [
+	^ ''
+]
+
+Object >> asList [
+	^ List new add: self; yourself
+]
+
+Object >> print [
+	self asString print
 ]

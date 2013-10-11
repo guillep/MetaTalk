@@ -1,12 +1,29 @@
-Point = Object [
-
-	|x y|
-
-	initialize := [x := 0. y := 0.]	
-	x := [^ x.]
-	y := [^ y.]
-	x: aNumber := [x := aNumber asNumber.]
-	y: aNumber := [y := aNumber asNumber.]
-	asString := [^ x asString , ''@'' , y asString.]
+Point
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words );
+	instanceVariables: #(#x #y ).
 	
+Point >> initialize [
+	x := 0.
+	y := 0
+]
+
+Point >> x [
+	^ x
+]
+
+Point >> y [
+	^ y
+]
+
+Point >> x: aNumber [
+	x := aNumber asNumber
+]
+
+Point >> y: aNumber [
+	y := aNumber asNumber
+]
+
+Point >> asString [
+	^ x asString , ''@'' , y asString
 ]

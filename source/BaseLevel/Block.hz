@@ -1,13 +1,23 @@
-Block = Object [
-
-	initialize := [^ <PrimitiveCall blockInitialize>.]
-	value := [^ <PrimitiveCall blockValue>.]	
-	valueWithArgs: aList := [^ <PrimitiveCall blockValueWithArgs>.]
-	whileTrue: aBlock := [
-		self value ifTrue: [
-			aBlock value.
-			self whileTrue: aBlock.
-		].
-	]
+Block
+	superclass: #Object;
+	instanceSpecification: #(#variable #pointers #words );
+	instanceVariables: #(#outerContext #startpc #nargs ).
 	
+Block >> initialize [ 
+	<PrimitiveCall blockInitialize>
+]
+
+Block >> value [
+	<PrimitiveCall blockValue>
+]
+
+Block >> valueWithArgs: aList [
+	<PrimitiveCall blockValueWithArgs>
+]
+
+Block >> whileTrue: aBlock [
+	self value ifTrue: [
+		aBlock value.
+		self whileTrue: aBlock.
+	]
 ]

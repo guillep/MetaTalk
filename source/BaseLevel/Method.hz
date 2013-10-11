@@ -1,1 +1,3 @@
-Method = Object []
+Method
+	superclass: #Object;
+	instanceSpecification: #(#compiledMethod).

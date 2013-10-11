@@ -1,9 +1,16 @@
-Class = Object [
+Class
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words );
+	instanceVariables: #(#superclass #methodDict #format ).
 	
-	initialize := [^ <PrimitiveCall classInitialize>.]
-	allocate := [^ <PrimitiveCall classAllocate>.]
-	new := [
-		^self allocate initialize.
-	]
-	
+Class >> initialize [
+	<PrimitiveCall classInitialize>
+]
+
+Class >> allocate [
+	<PrimitiveCall classAllocate>
+]
+
+Class >> new [
+	^ self allocate initialize.
 ]

@@ -1,8 +1,19 @@
-String = List [
+String
+	superclass: #Object;
+	instanceSpecification: #(#variable #byte ).
 
-	add: aChar := [super add: (aChar asCharacter).]
-	at: index put: aChar := [super at: index put: (aChar asCharacter).]
-	print := [<PrimitiveCall stringPrint>.]
-	asString := [^ self.]
-	
+String >> add: aChar [
+	super add: (aChar asCharacter)
+]
+
+String >> at: index put: aChar [
+	super at: index put: (aChar asCharacter)
+]
+
+String >> print [
+	<PrimitiveCall stringPrint>
+]
+
+String >> asString [
+	^ self
 ]

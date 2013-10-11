@@ -1,6 +1,12 @@
-Char = Number [
-	
-	asCharacter := [^ self.]
-	asString := [^ String new add: self.]
-	
+Char
+	superclass: #Number;
+	instanceSpecification: #(#pointers #words );
+	instanceVariables: #(#value ).
+
+Char >> asCharacter [
+	^ self
+]
+
+Char >> asString [
+	^ String new add: self.
 ]

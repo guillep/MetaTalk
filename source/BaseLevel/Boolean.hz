@@ -1,5 +1,7 @@
-Boolean = Object [
+Boolean
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words ).
 
-	initialize := [^ False new.]	
-
+Boolean >> initialize [
+	^ False new
 ]
