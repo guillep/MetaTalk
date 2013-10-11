@@ -1,23 +1,19 @@
 Block
-	superclass: #Object;
-	instanceSpecification: #(#variable #pointers #words );
-	instanceVariables: #(#outerContext #startpc #nargs ).
-	
-Block >> initialize [ 
-	<PrimitiveCall blockInitialize>
-]
+    superclass: #Object;
+    instanceSpecification: #(#variable #pointers #words );
+    instanceVariables: #(#outerContext #startpc #nargs ).
 
 Block >> value [
-	<PrimitiveCall blockValue>
+    <primitive: 201>
 ]
 
 Block >> valueWithArgs: aList [
-	<PrimitiveCall blockValueWithArgs>
+    <primitive: 206>
 ]
 
 Block >> whileTrue: aBlock [
-	self value ifTrue: [
-		aBlock value.
-		self whileTrue: aBlock.
-	]
+    self value ifTrue: [
+        aBlock value.
+        self whileTrue: aBlock.
+    ]
 ]
