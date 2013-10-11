@@ -1,12 +1,15 @@
 Char
-	superclass: #Number;
-	instanceSpecification: #(#pointers #words );
-	instanceVariables: #(#value ).
+    superclass: #Number;
+    instanceSpecification: #(#pointers #words );
+    instanceVariables: #(#value ).
 
 Char >> asCharacter [
-	^ self
+    ^ self
 ]
 
 Char >> asString [
-	^ String new add: self.
+    | string |
+    string := String new: 1.
+    string at: 1 put: self.
+    ^ string
 ]
