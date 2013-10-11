@@ -1,7 +1,7 @@
 UndefinedObject
-	superclass: #Object;
-	instanceSpecification: #(#pointers #words ).
-	
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words ).
+    
 UndefinedObject >> asString [
-	^ 'nil'
+    ^ 'nil'
 ]
