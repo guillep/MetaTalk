@@ -1,3 +1,13 @@
 Method
-	superclass: #Object;
-	instanceSpecification: #(#compiledMethod).
+    superclass: #Object;
+    instanceSpecification: #(#compiledMethod).
+	
+MethodContext
+    superclass: #Object;
+    instanceSpecification: #(#variable #pointers #words);
+    instanceVariables: #(#sender #pc #stackp #method #closureOrNil #receiver).
+	
+MethodDictionary
+    superclass: #PCDictionary;
+    instanceSpecification: #(#variable #pointers #words );
+    instanceVariables: #(#tally #array ).
