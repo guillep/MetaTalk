@@ -1,16 +1,22 @@
 Class
-	superclass: #Object;
-	instanceSpecification: #(#pointers #words );
-	instanceVariables: #(#superclass #methodDict #format ).
-	
-Class >> initialize [
-	<PrimitiveCall classInitialize>
-]
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words );
+    instanceVariables: #(#superclass #methodDict #format ).
 
 Class >> allocate [
-	<PrimitiveCall classAllocate>
+    <primitive: 70>
+]
+
+Class >> allocate: aSize [
+    <primitive: 71>
 ]
 
 Class >> new [
-	^ self allocate initialize.
+    ^ self allocate initialize.
+]
+
+Class >> new: aSize [
+    ^ (self allocate: aSize)
+        initialize;
+        yourself.
 ]
