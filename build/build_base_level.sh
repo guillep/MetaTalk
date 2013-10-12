@@ -37,8 +37,8 @@ Workspace openContents: '\"I am a builder for a Metatalk base level system. I bo
 
 \"Load a seed from the folder of the downloaded sources\"
 seed := MttSeed new
-    fromDirectoryNamed: '../source/BaseLevel';
-	 except: [ :f | (f basename beginsWith: 'Initialization.hz') ];
+    fromDirectoryNamed: ''../source/BaseLevel'';
+	 except: [ :f | (f basename beginsWith: ''Initialization.hz'') ];
     buildSeed.
 
 \"Create an object space that will use an AST evaluator to run some code\"
@@ -53,6 +53,8 @@ builder := MttBuilder new.
 builder objectSpace: objectSpace.
 builder kernelSpec: seed.
 builder buildKernel.
+
+objectSpace serializeInFileNamed: ''metatalk_baselevel.image''.
 
 \"Browse me\"
 objectSpace browse.'.
