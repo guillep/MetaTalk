@@ -1,0 +1,63 @@
+ObjectMirror
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words );
+    instanceVariables: #(#baseObj #classMirror).
+
+ObjectMirror >> initialize [
+    baseObj := nil.
+    classMirror := nil
+]
+    
+ObjectMirror >> class [
+    ^ classMirror
+]
+    
+ObjectMirror >> class: aBaseClass [
+    classMirror := Mirror on: aBaseClass.
+    Mirror setDirectClass: aBaseClass on: baseObj.
+    (Mirror directMirrorOn: self) = nil ifTrue: [
+        Mirror setDirectClass: classMirror on: self.    
+    ] ifFalse: [
+        (Mirror on: self) class: classMirror.
+    ].
+]
+    
+ObjectMirror >> baseObject [
+    ^ baseObj
+]    
+
+ObjectMirror >> baseObj: aBaseObject [
+    baseObj := aBaseObject.
+    Mirror setDirectMirror: self on: baseObj.
+    self class: (Mirror directClassOn: baseObj).
+]
+
+ObjectMirror >> variables [
+    ^ classMirror instanceVariables
+]
+
+ObjectMirror >> at: varName [
+    ^ Mirror obj: baseObj atIndex: (classMirror indexOf: varName)
+]
+
+ObjectMirror >> at: varName     put: anObject [
+    Mirror obj: baseObj atIndex: (classMirror indexOf: varName) put: anObject
+]
+
+ObjectMirror >> perform: aMethodName withArguments: args [
+    |index|
+    index := (classMirror methodIndexOf: aMethodName).
+    index = nil ifTrue: [
+        'MetaLevel: methodNameNotFound.' print.
+        ^ nil.
+    ] ifFalse: [
+        Mirror obj: baseObj performOnIndex: index  withArguments: args.
+    ].
+]
+
+ObjectMirror >> asString [
+    ^ (''Mirror on: a '' , classMirror name , '' '' , baseObj asString)
+]
+ObjectMirror >> isClass [
+    ^ false
+]

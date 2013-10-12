@@ -1,0 +1,112 @@
+ClassMirror
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words );
+    instanceVariables: #(#mirrorSuperClass #mirrorMethodDictionary #mirrorFormat #baseObj #classMirror #name #superMirror #methods #instanceVariables #methodSource).
+    
+ClassMirror >> initialize [
+    <PrimitiveCall classInitialize>
+]
+    
+ClassMirror >> allocate [
+    <PrimitiveCall classAllocate>
+]
+    
+ClassMirror >> new [
+    ^ self allocate initialize baseObj: baseObj new
+]
+
+ClassMirror >> subClass: aName instanceVariableNames: ivs [
+    ^ (((Mirror on: Class) new super: self baseObject) instanceVariables: ivs) name: aName.
+]
+    
+ClassMirror >> on: aBaseObject [
+    |mirror|
+    mirror := (self directMirrorOn: aBaseObject).
+    (mirror = nil) ifTrue: [
+        ^ self newOn: aBaseObject.    
+    ] ifFalse: [
+        ^ mirror.
+    ].
+]
+
+ClassMirror >> newOn: aBaseObject [
+    |class classMirror|
+    class := self directClassOn: aBaseObject.
+    classMirror := Mirror on: class.
+    ^ classMirror new baseObj: aBaseObject.
+]
+
+ClassMirror >> name [
+    ^ name
+]
+
+ClassMirror >> name: aName [
+    name := aName.
+    self setDirectClassName: aName
+]
+
+ClassMirror >> super [
+    ^ superMirror
+]
+
+ClassMirror >> super: aBaseClass [
+    superMirror := Mirror on: aBaseClass.
+    Mirror setDirectSuper: aBaseClass on: baseObj.
+    (Mirror directMirrorOn: self) = nil ifTrue: [
+        Mirror setDirectSuper: superMirror on: self.    
+    ] ifFalse: [
+        (Mirror on: self) super: superMirror.
+    ].            
+]
+
+ClassMirror >> methods [
+    methods = nil ifTrue: [
+        ^ Dict new.
+    ].
+    ^ methods keys.
+]
+
+ClassMirror >> instanceVariables [
+    ^ instanceVariables
+]
+
+ClassMirror >> instanceVariables: ivs [
+    superMirror = nil ifTrue: [
+        instanceVariables := ivs.        
+    ] ifFalse: [
+        instanceVariables := superMirror instanceVariables , ivs.
+    ].
+    Mirror setDirectInstanceSize: instanceVariables size on: baseObj.
+]
+
+ClassMirror >> atMethod: methodNameWithArgs put: codeAsString [
+    (methodSource = nil) ifTrue: [
+        methodSource := Dict new.    
+    ].
+    methodSource atKey: methodNameWithArgs put: codeAsString.
+    self atMethod: methodNameWithArgs compile: codeAsString.
+]
+
+ClassMirror >> methodSourceOf: aMethodName [
+    ^ methodSource atKey: aMethodName.    
+]
+    
+ClassMirror >> isClass [
+    ^ true
+]
+    
+ClassMirror >> indexOf: varName [
+    ^ instanceVariables indexOf: varName
+]
+
+ClassMirror >> methodIndexOf: aMethodName [
+    |index|
+    index := methods atKey: aMethodName.
+    (index = nil) ifTrue: [
+            superMirror = nil ifTrue: [
+                ^ nil.    
+            ].
+            ^ superMirror methodIndexOf: aMethodName.
+    ].
+    ^ index.
+]
