@@ -1,0 +1,3 @@
+Symbol
+    superclass: #String;
+    instanceSpecification: #(#variable #byte ).

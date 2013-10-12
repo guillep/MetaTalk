@@ -11,9 +11,18 @@ String >> at: index put: aChar [
     <primitive: 64>
 ]
 
+String >> byteAt: index put: aByte [
+    <primitive: 61>
+]
+
 String >> print [
-    "Should fix this maybe"
-    "<PrimitiveCall stringPrint>"
+    | f |
+    f := File new.
+    f openReadWrite: './log.txt'.
+    f position: f size.
+    f nextPutAll: self.
+    f cr.
+    f close
 ]
 
 String >> asString [

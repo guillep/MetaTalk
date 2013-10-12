@@ -25,6 +25,15 @@ Object >> asList [
     ^ List new add: self; yourself
 ]
 
+Object >> yourself [
+    ^ self
+]
+
 Object >> print [
     self asString print
+]
+
+Object >> quit [
+	"Exit from the system."
+	<primitive: 113>
 ]

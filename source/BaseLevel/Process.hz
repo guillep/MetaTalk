@@ -1,0 +1,9 @@
+Process
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words );
+	instanceVariables: #(#nextLink #suspendedContext #priority #myList #threadId #errorHandler ).
+
+ProcessorScheduler
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words );
+	instanceVariables: #(#suspendedProcessLists #activeProcess ).

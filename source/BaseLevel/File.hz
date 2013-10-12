@@ -1,0 +1,92 @@
+File
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words );
+	instanceVariables: #(#name #fileID ).
+	
+ByteArray
+	superclass: #Object;
+	instanceSpecification: #(#variable #byte );
+	instanceVariables: #().
+
+File >> close [
+    "Close this file."
+    fileID
+    ifNotNil: [ 
+        self primClose: fileID.
+        fileID := nil ]
+]
+
+File >> primClose: id
+[
+    "Close this file. Don't raise an error if the primitive fails."
+    <primitive: 'primitiveFileClose' module: 'FilePlugin'>
+]
+
+File >> openReadWrite: fileName
+[
+    "Open the file with the given name for reading only."
+    name := nil.
+    fileID := self primOpen: fileName writable: true.
+    name := fileName
+]
+
+File >> primOpen: fileName writable: writableFlag
+[
+    "Open a file of the given name, and return the file ID obtained.
+    If writableFlag is true, then
+    if there is none with this name, then create one
+    else prepare to overwrite the existing from the beginning
+    otherwise if the file exists, open it read-only
+    else return nil"
+    <primitive: 'primitiveFileOpen' module: 'FilePlugin'>
+    self primitiveFailed
+]
+
+File >> position: newPosition
+[
+    "Seek to the given file position in bytes."
+    ^ self primSetPosition: fileID to: newPosition
+]
+
+File >> primSetPosition: id to: anInteger
+[
+    "Set this file to the given position."
+    <primitive: 'primitiveFileSetPosition' module: 'FilePlugin'>
+    self primitiveFailed
+]
+
+File >> size
+[
+    "Answer the size of this file in bytes."
+    ^ self primSize: fileID
+]
+
+File >> primSize: id
+[
+    "Answer the size of this file."
+    <primitive: 'primitiveFileSize' module: 'FilePlugin'>
+    self primitiveFailed
+]
+
+File >> nextPutAll: buffer
+[
+    "Write the contents of the given bytes or words object to this file."
+    ^ self
+        primWrite: fileID
+        from: buffer
+        startingAt: 1
+        count: buffer size
+]
+
+File >> primWrite: id from: buffer startingAt: startIndex count: count
+[
+    "Write up to count elements from the given buffer and answer the number of elements actually written. The buffer may either a byte- or word-indexable object."
+    <primitive: 'primitiveFileWrite' module: 'FilePlugin'>
+    self primitiveFailed
+]
+
+File >> cr
+[
+    self nextPutAll: '
+'
+]

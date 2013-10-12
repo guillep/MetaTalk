@@ -8,6 +8,11 @@ MethodContext
     instanceVariables: #(#sender #pc #stackp #method #closureOrNil #receiver).
 	
 MethodDictionary
-    superclass: #PCDictionary;
+    superclass: #Object;
     instanceSpecification: #(#variable #pointers #words );
     instanceVariables: #(#tally #array ).
+	
+Association
+	superclass: #Object;
+	instanceSpecification: #(#pointers #words );
+	instanceVariables: #(#key #value ).
