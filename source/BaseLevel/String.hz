@@ -15,6 +15,10 @@ String >> byteAt: index put: aByte [
     <primitive: 61>
 ]
 
+String >> size [
+    <primitive: 62>
+]
+
 String >> print [
     | f |
     f := File new.
