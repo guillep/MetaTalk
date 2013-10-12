@@ -28,7 +28,7 @@ wget -O - get.pharo.org/20+vm | bash
 
 #Load stable version of the monticello configuration, according to this git sources
 REPO=http://smalltalkhub.com/mc/Guille/Seed/main
-./pharo Metatalk.image config $REPO ConfigurationOfHazelnut --install=$VERSION
+./pharo MetatalkBootstrap.image config $REPO ConfigurationOfHazelnut --install=$VERSION
 
 echo "Configuration Loaded. Opening script..."
 
@@ -56,7 +56,7 @@ objectSpace serializeInFileNamed: 'metatalk_baselevel.image'.
 Smalltalk snapshot: false andQuit: true.
 " > ./script.st
 
-./pharo Metatalk.image script.st
+./pharo MetatalkBootstrap.image script.st
 rm script.st
 rm PharoDebug.log
 echo "Script created and loaded. Finished! :D"
