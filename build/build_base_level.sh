@@ -22,41 +22,43 @@ cd $RESULTS_FOLDER
 #Load image for this project
 
 wget -O - get.pharo.org/20+vm | bash
-./pharo Pharo.image save PharoCandleBootstrap --delete-old
+./pharo Pharo.image save MetatalkBootstrap --delete-old
 
 
 
 #Load stable version of the monticello configuration, according to this git sources
 REPO=http://smalltalkhub.com/mc/Guille/Seed/main
-./pharo PharoCandleBootstrap.image config $REPO ConfigurationOfHazelnut --install=$VERSION
+./pharo MetatalkBootstrap.image config $REPO ConfigurationOfHazelnut --install=$VERSION
 
 echo "Configuration Loaded. Opening script..."
 
 echo -e "
-Workspace openContents: '\"I am a builder for a Pharo Candle system. I bootstrap the system using an object space. You configure myself by providing mi a kernelSpec, and sending me the message #buildKernel.\"
+Workspace openContents: '\"I am a builder for a Metatalk base level system. I bootstrap the system using an object space. You configure myself by providing mi a kernelSpec, and sending me the message #buildKernel.\"
 
 \"Load a seed from the folder of the downloaded sources\"
-seed := PharoCandleSeed new
-    fromDirectoryNamed: ''../source'';
+seed := MttSeed new
+    fromDirectoryNamed: '../source/BaseLevel';
+	 except: [ :f | (f basename beginsWith: 'Initialization.hz') ];
     buildSeed.
 
 \"Create an object space that will use an AST evaluator to run some code\"
 objectSpace := AtObjectSpace new.
-objectSpace worldConfiguration: OzPharoCandle world.
+objectSpace worldConfiguration: MttMetatalk world.
 objectSpace interpreter: (AtASTEvaluator new codeProvider: seed; yourself).
+objectSpace mirrorFactory: MttMirrorFactory new.
+objectSpace methodDictionaryBuilder: MttMethodDictionaryMirror.
 
-\"Create a builder, and tell it to bootstrap. Voilá, the objectSpace will be full\"
-builder := PharoCandleBuilder new.
+\"Create a builder, and tell it to bootstrap. Voil√°, the objectSpace will be full\"
+builder := MttBuilder new.
 builder objectSpace: objectSpace.
 builder kernelSpec: seed.
-builder	buildKernel.
+builder buildKernel.
 
 \"Browse me\"
 objectSpace browse.'.
 Smalltalk snapshot: true andQuit: true." > ./script.st
 
-./pharo PharoCandleBootstrap.image script.st
+./pharo MetatalkBootstrap.image script.st
 rm script.st
 rm PharoDebug.log
 echo "Script created and loaded. Finished! :D"
-#./pharo $JOB_NAME.image test --junit-xml-output "Seed.*"
