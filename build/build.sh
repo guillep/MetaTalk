@@ -36,25 +36,45 @@ echo -e "
 Workspace openContents: '\"I am a builder for a Metatalk base level system. I bootstrap the system using an object space. You configure myself by providing mi a kernelSpec, and sending me the message #buildKernel.\"
 
 \"Load a seed from the folder of the downloaded sources\"
-seed := MttSeed new
+baseLevel := MttSeed new
     fromDirectoryNamed: ''../source/BaseLevel'';
-	 except: [ :f | (f basename beginsWith: ''Initialization.hz'') ];
     buildSeed.
+	
+metaLevel := MttSeed new
+	parent: baseLevel;
+   fromDirectoryNamed: ''../source/MetaLevel'';
+   buildSeed.
 
 \"Create an object space that will use an AST evaluator to run some code\"
 objectSpace := AtObjectSpace new.
 objectSpace worldConfiguration: MttMetatalk world.
-objectSpace interpreter: (AtASTEvaluator new codeProvider: seed; yourself).
+objectSpace interpreter: (AtASTEvaluator new codeProvider: baseLevel, metaLevel; yourself).
 objectSpace mirrorFactory: MttMirrorFactory new.
 objectSpace methodDictionaryBuilder: MttMethodDictionaryMirror.
 
-\"Create a builder, and tell it to bootstrap. Voil√°, the objectSpace will be full\"
-builder := MttBuilder new.
+\"Create a builder, and tell it to bootstrap. Voila, the objectSpace will be full\"
+builder := MttBaseLevelBuilder new.
 builder objectSpace: objectSpace.
-builder kernelSpec: seed.
+builder kernelSpec: baseLevel.
+builder buildKernel.
+process := objectSpace createProcessWithPriority: 3 doing: MttMetatalk world baseLevelValidation.
+objectSpace installAsActiveProcess: process.
+
+\"Create a builder, and tell it to bootstrap. Voila, the objectSpace will be full of mirrors\"
+builder := MttMetaLevelBuilder new.
+builder objectSpace: objectSpace.
+builder metaLevelSpec: metaLevel.
+builder baseLevelSpec: baseLevel.
 builder buildKernel.
 
-objectSpace serializeInFileNamed: ''metatalk_baselevel.image''.
+process := objectSpace createProcessWithPriority: 3 doing: MttMetatalk world baseLevelValidation.
+process := objectSpace createProcessWithPriority: 3 doing: MttMetatalk world metaLevelValidation.
+
+objectSpace installAsActiveProcess: process.
+
+
+''metatalk.image'' asFileReference ensureDeleted.
+objectSpace serializeInFileNamed: ''metatalk.image''.
 
 \"Browse me\"
 objectSpace browse.'.

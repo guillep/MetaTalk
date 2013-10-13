@@ -34,28 +34,43 @@ echo "Configuration Loaded. Opening script..."
 
 echo -e "
 \"Load a seed from the folder of the downloaded sources\"
-seed := MttSeed new
+baseLevel := MttSeed new
     fromDirectoryNamed: '../source/BaseLevel';
-	 except: [ :f | (f basename beginsWith: 'Initialization.hz') ];
     buildSeed.
+	
+metaLevel := MttSeed new
+	parent: baseLevel;
+   fromDirectoryNamed: '../source/MetaLevel';
+   buildSeed.
 
 \"Create an object space that will use an AST evaluator to run some code\"
 objectSpace := AtObjectSpace new.
 objectSpace worldConfiguration: MttMetatalk world.
-objectSpace interpreter: (AtASTEvaluator new codeProvider: seed; yourself).
+objectSpace interpreter: (AtASTEvaluator new codeProvider: baseLevel, metaLevel; yourself).
 objectSpace mirrorFactory: MttMirrorFactory new.
 objectSpace methodDictionaryBuilder: MttMethodDictionaryMirror.
 
-\"Create a builder, and tell it to bootstrap. Voilá, the objectSpace will be full\"
-builder := MttBuilder new.
+\"Create a builder, and tell it to bootstrap. Voila, the objectSpace will be full\"
+builder := MttBaseLevelBuilder new.
 builder objectSpace: objectSpace.
-builder kernelSpec: seed.
-builder	buildKernel.
-
+builder kernelSpec: baseLevel.
+builder buildKernel.
 process := objectSpace createProcessWithPriority: 3 doing: MttMetatalk world baseLevelValidation.
 objectSpace installAsActiveProcess: process.
 
-objectSpace serializeInFileNamed: 'metatalk_baselevel.image'.
+\"Create a builder, and tell it to bootstrap. Voila, the objectSpace will be full of mirrors\"
+builder := MttMetaLevelBuilder new.
+builder objectSpace: objectSpace.
+builder metaLevelSpec: metaLevel.
+builder baseLevelSpec: baseLevel.
+builder buildKernel.
+
+process := objectSpace createProcessWithPriority: 3 doing: MttMetatalk world metaLevelValidation.
+objectSpace installAsActiveProcess: process.
+
+
+'metatalk_metalevel.image' asFileReference ensureDeleted.
+objectSpace serializeInFileNamed: 'metatalk_metalevel.image'.
 Smalltalk snapshot: false andQuit: true.
 " > ./script.st
 
