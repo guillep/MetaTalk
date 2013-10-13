@@ -46,7 +46,7 @@ objectSpace mirrorFactory: MttMirrorFactory new.
 objectSpace methodDictionaryBuilder: MttMethodDictionaryMirror.
 
 \"Create a builder, and tell it to bootstrap. Voilá, the objectSpace will be full\"
-builder := MttMetaLevelBuilder new.
+builder := MttBaseLevelBuilder new.
 builder objectSpace: objectSpace.
 builder baseLevelSpec: baseLevel.
 builder buildKernel.
