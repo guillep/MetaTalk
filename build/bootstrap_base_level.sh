@@ -48,7 +48,7 @@ objectSpace methodDictionaryBuilder: MttMethodDictionaryMirror.
 \"Create a builder, and tell it to bootstrap. Voilá, the objectSpace will be full\"
 builder := MttBaseLevelBuilder new.
 builder objectSpace: objectSpace.
-builder baseLevelSpec: baseLevel.
+builder kernelSpec: baseLevel.
 builder buildKernel.
 
 process := objectSpace createProcessWithPriority: 3 doing: MttMetatalk world baseLevelValidation.
