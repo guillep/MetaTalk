@@ -13,11 +13,11 @@ AbstractMirror >> setClassMirror: aClassMirror [
 
 AbstractMirror >> baseClass: aBaseClass [
     self setClassMirror: (Mirror on: aBaseClass).
-    Mirror setDirectClass: aBaseClass on: baseObj.
+    Mirror setDirectClass: aBaseClass on: self baseObject.
     (Mirror directMirrorOn: self) = nil ifTrue: [
-        Mirror setDirectClass: classMirror on: self.    
+        Mirror setDirectClass: self classMirror on: self.    
     ] ifFalse: [
-        (Mirror on: self) class: classMirror.
+        (Mirror on: self) class: self classMirror.
     ].
 ]
     
@@ -31,28 +31,32 @@ AbstractMirror >> setBaseObject: aBaseObject [
 
 AbstractMirror >> baseObject: aBaseObject [
     self setBaseObject: aBaseObject.
-    Mirror setDirectMirror: self on: baseObj.
-    self baseClass: (self directClassOn: baseObj).
+    Mirror setDirectMirror: self on: self baseObject.
+    self baseClass: (self directClassOn: self baseObject).
 ]
 
 AbstractMirror >> variables [
-    ^ classMirror instanceVariables
+    ^ self classMirror instanceVariables
 ]
 
 AbstractMirror >> at: varName [
-    ^ Mirror obj: baseObj atIndex: (classMirror indexOf: varName)
+    ^ self obj: self baseObject atIndex: (self classMirror indexOf: varName)
 ]
 
 AbstractMirror >> at: varName put: anObject [
-    Mirror obj: baseObj atIndex: (classMirror indexOf: varName) put: anObject
+    self obj: self baseObject atIndex: (self classMirror indexOf: varName) put: anObject
+]
+
+AbstractMirror >> perform: aMethodName [
+	^ self perform: aMethodName withArguments: {}.
 ]
 
 AbstractMirror >> perform: aMethodName withArguments: args [
-	Mirror obj: baseObj perform: aMethodName withArguments: args.
+	^ self obj: self baseObject perform: aMethodName withArguments: args.
 ]
 
 AbstractMirror >> asString [
-    ^ ('Mirror on: a ' , classMirror name , ' ' , baseObj asString)
+    ^ 'Mirror on: a ' , self classMirror name , ' ' , self baseObject asString
 ]
 
 AbstractMirror >> isClass [
@@ -60,11 +64,11 @@ AbstractMirror >> isClass [
 ]
 
 AbstractMirror >> directClassOn: aBaseObject [
-    <primitive: 111>
+    ^ Mirror directClassOn: aBaseObject
 ]
 
 AbstractMirror >> setDirectClass: class on: aBaseObject [
-    <primitive: 160>
+    Mirror setDirectClass: class on: aBaseObject 
 ]
 
 AbstractMirror >> obj: aBaseObj atIndex: index [
@@ -75,10 +79,10 @@ AbstractMirror >> obj: aBaseObj atIndex: index put: anObject [
     <primitive: 74>
 ]
 
-AbstractMirror >> obj: aBaseObj performOnIndex: Index withArguments: args [
-    ^ self obj: aBaseObj performOnIndex: Index withArguments: args lookupClass: (self directClassOn: aBaseObject)
+AbstractMirror >> obj: aBaseObject perform: index withArguments: args [
+    ^ self obj: aBaseObject perform: index withArguments: args lookupClass: (self directClassOn: aBaseObject).
 ]
 
-AbstractMirror >> obj: aBaseObj performOnIndex: Index withArguments: args lookupClass: aClass [
+AbstractMirror >> obj: aBaseObj perform: index withArguments: args lookupClass: aClass [
     <primitive: 100>
 ]

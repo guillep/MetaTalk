@@ -17,10 +17,25 @@ MirrorFactory >> on: aBaseObject [
     ].
 ]
 
+MirrorFactory >> newOn: aBaseObject [
+    |class classMirror|
+    class := self directClassOn: aBaseObject.
+    classMirror := Mirror on: class.
+    ^ classMirror newWithBaseObject: aBaseObject.
+]
+
 MirrorFactory >> directMirrorOn: aBaseObject [
     ^ mirrorDictionary at: aBaseObject
 ]
 
 MirrorFactory >> setDirectMirror: mirror on: aBaseObject [
     mirrorDictionary at: aBaseObject put: mirror
+]
+
+MirrorFactory >> directClassOn: aBaseObject [
+    <primitive: 111>
+]
+
+MirrorFactory >> setDirectClass: class on: aBaseObject [
+    <primitive: 160>
 ]

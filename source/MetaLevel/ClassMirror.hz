@@ -1,22 +1,27 @@
 ClassMirror
     superclass: #AbstractMirror;
     instanceSpecification: #(#pointers #words );
-    instanceVariables: #(#superMirror #mirrorMethodDictionary #mirrorFormat #baseObj #classMirror #name #methods #instanceVariables #methodSource).
+    instanceVariables: #(#baseObj #classMirror #name #instanceVariables #methodSource #superMirror #methods).
 
 ClassMirror >> allocate [
     <primitive: 70>
 ]
     
-ClassMirror >> newWithBaseObject: baseObj [
-    ^ self allocate initialize baseObj: baseObj
+ClassMirror >> newWithBaseObject: baseObject [
+	| mirror |
+    mirror := ObjectMirror new.
+	mirror setBaseObject: baseObject.
+	mirror setClassMirror: self.
+	^mirror.
+	"^ self allocate initialize setBaseObject: baseObject"
 ]
 
 ClassMirror >> initialize [
     
     "to behave like a class"
     superMirror := nil.
-    mirrorMethodDictionary := MethodDictionary new.
-    mirrorFormat := nil.
+	"mirrorMethodDictionary := MethodDictionary new.
+    mirrorFormat := nil."
     
     "basic object mirror things"
     baseObj := nil.
@@ -24,12 +29,12 @@ ClassMirror >> initialize [
     
     "class mirror properties"
     name := nil.
-    methods := nil.
+    "methods := nil."
     instanceVariables := nil.
     methodSource := nil.
 ]
 
-ClassMirror >> class [
+ClassMirror >> classMirror [
     ^ classMirror
 ]
 
@@ -47,13 +52,6 @@ ClassMirror >> setBaseObject: aBaseObject [
 
 ClassMirror >> subClass: aName instanceVariableNames: ivs [
     ^ (((Mirror on: Class) new super: self baseObject) instanceVariables: ivs) name: aName.
-]
-
-ClassMirror >> newOn: aBaseObject [
-    |class classMirror|
-    class := self directClassOn: aBaseObject.
-    classMirror := Mirror on: class.
-    ^ classMirror newWithBaseObject: aBaseObject.
 ]
 
 ClassMirror >> name [
@@ -121,4 +119,5 @@ ClassMirror >> methodAt: aMethodName [
 
 ClassMirror >> atMethod: methodNameWithArgs compile: codeAsString [
     "<PrimitiveCall mirrorAtMethodPut>"
+	^ self
 ]

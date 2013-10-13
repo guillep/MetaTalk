@@ -8,12 +8,12 @@ ObjectMirror >> initialize [
     classMirror := nil
 ]
 
-ObjectMirror >> class [
+ObjectMirror >> classMirror [
     ^ classMirror
 ]
 
 ObjectMirror >> setClassMirror: aClassMirror [
-    ^ classMirror
+    classMirror := aClassMirror
 ]
     
 ObjectMirror >> baseObject [
