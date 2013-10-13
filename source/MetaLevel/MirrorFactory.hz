@@ -2,7 +2,17 @@ MirrorFactory
     superclass: #Object;
     instanceSpecification: #(#pointers #words );
     instanceVariables: #(#mirrorDictionary).
-    
+
+MirrorFactory >> on: aBaseObject [
+    |mirror|
+    mirror := (self directMirrorOn: aBaseObject).
+    (mirror = nil) ifTrue: [
+        ^ self newOn: aBaseObject.    
+    ] ifFalse: [
+        ^ mirror.
+    ].
+]
+
 MirrorFactory >> directMirrorOn: aBaseObject [
     <PrimitiveCall mirrorDirectMirrorOn>
 ]
@@ -45,8 +55,4 @@ MirrorFactory >> obj: aBaseObj atIndex: index put: anObject [
 
 MirrorFactory >> obj: aBaseObj performOnIndex: Index withArguments: args [
     <PrimitiveCall mirrorPerformOnIndexWithArguments>
-]
-
-MirrorFactory >> atMethod: methodNameWithArgs compile: codeAsString [
-    <PrimitiveCall mirrorAtMethodPut>
 ]

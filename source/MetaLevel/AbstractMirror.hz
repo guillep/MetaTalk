@@ -1,0 +1,59 @@
+AbstractMirror
+    superclass: #Object;
+    instanceSpecification: #(#pointers #words );
+    instanceVariables: #().
+    
+AbstractMirror >> classMirror [
+
+]
+
+AbstractMirror >> setClassMirror: aClassMirror [
+	
+]
+
+AbstractMirror >> baseClass: aBaseClass [
+    self setClassMirror: (Mirror on: aBaseClass).
+    Mirror setDirectClass: aBaseClass on: baseObj.
+    (Mirror directMirrorOn: self) = nil ifTrue: [
+        Mirror setDirectClass: classMirror on: self.    
+    ] ifFalse: [
+        (Mirror on: self) class: classMirror.
+    ].
+]
+    
+AbstractMirror >> baseObject [
+
+]
+
+AbstractMirror >> setBaseObject: aBaseObject [
+
+]
+
+AbstractMirror >> baseObject: aBaseObject [
+    self setBaseObject: aBaseObject.
+    Mirror setDirectMirror: self on: baseObj.
+    self baseClass: (Mirror directClassOn: baseObj).
+]
+
+AbstractMirror >> variables [
+    ^ classMirror instanceVariables
+]
+
+AbstractMirror >> at: varName [
+    ^ Mirror obj: baseObj atIndex: (classMirror indexOf: varName)
+]
+
+AbstractMirror >> at: varName put: anObject [
+    Mirror obj: baseObj atIndex: (classMirror indexOf: varName) put: anObject
+]
+
+AbstractMirror >> perform: aMethodName withArguments: args [
+	Mirror obj: baseObj perform: aMethodName withArguments: args.
+]
+
+AbstractMirror >> asString [
+    ^ ('Mirror on: a ' , classMirror name , ' ' , baseObj asString)
+]
+AbstractMirror >> isClass [
+    ^ false
+]
