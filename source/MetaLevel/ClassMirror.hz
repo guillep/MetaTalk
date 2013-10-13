@@ -2,17 +2,13 @@ ClassMirror
     superclass: #AbstractMirror;
     instanceSpecification: #(#pointers #words );
     instanceVariables: #(#superMirror #mirrorMethodDictionary #mirrorFormat #baseObj #classMirror #name #methods #instanceVariables #methodSource).
-    
-ClassMirror >> initialize [
-    <PrimitiveCall classInitialize>
-]
-    
+
 ClassMirror >> allocate [
-    <PrimitiveCall classAllocate>
+    <primitive: 70>
 ]
     
-ClassMirror >> new [
-    ^ self allocate initialize baseObj: baseObj new
+ClassMirror >> newWithBaseObject: baseObj [
+    ^ self allocate initialize baseObj: baseObj
 ]
 
 ClassMirror >> initialize [
@@ -57,7 +53,7 @@ ClassMirror >> newOn: aBaseObject [
     |class classMirror|
     class := self directClassOn: aBaseObject.
     classMirror := Mirror on: class.
-    ^ classMirror new baseObj: aBaseObject.
+    ^ classMirror newWithBaseObject: aBaseObject.
 ]
 
 ClassMirror >> name [
@@ -115,14 +111,14 @@ ClassMirror >> methodAt: aMethodName [
     | method |
     method := methods atKey: aMethodName.
     (method = nil) ifTrue: [
-            superMirror = nil ifTrue: [
-                ^ nil.    
-            ].
-            ^ superMirror methodAt: aMethodName.
+        superMirror = nil ifTrue: [
+            ^ nil.    
+        ].
+        ^ superMirror methodAt: aMethodName.
     ].
     ^ method
 ]
 
 ClassMirror >> atMethod: methodNameWithArgs compile: codeAsString [
-    <PrimitiveCall mirrorAtMethodPut>
+    "<PrimitiveCall mirrorAtMethodPut>"
 ]

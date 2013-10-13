@@ -32,7 +32,7 @@ AbstractMirror >> setBaseObject: aBaseObject [
 AbstractMirror >> baseObject: aBaseObject [
     self setBaseObject: aBaseObject.
     Mirror setDirectMirror: self on: baseObj.
-    self baseClass: (Mirror directClassOn: baseObj).
+    self baseClass: (self directClassOn: baseObj).
 ]
 
 AbstractMirror >> variables [
@@ -54,6 +54,31 @@ AbstractMirror >> perform: aMethodName withArguments: args [
 AbstractMirror >> asString [
     ^ ('Mirror on: a ' , classMirror name , ' ' , baseObj asString)
 ]
+
 AbstractMirror >> isClass [
     ^ false
+]
+
+AbstractMirror >> directClassOn: aBaseObject [
+    <primitive: 111>
+]
+
+AbstractMirror >> setDirectClass: class on: aBaseObject [
+    <primitive: 160>
+]
+
+AbstractMirror >> obj: aBaseObj atIndex: index [
+    <primitive: 73>
+]
+
+AbstractMirror >> obj: aBaseObj atIndex: index put: anObject [
+    <primitive: 74>
+]
+
+AbstractMirror >> obj: aBaseObj performOnIndex: Index withArguments: args [
+    ^ self obj: aBaseObj performOnIndex: Index withArguments: args lookupClass: (self directClassOn: aBaseObject)
+]
+
+AbstractMirror >> obj: aBaseObj performOnIndex: Index withArguments: args lookupClass: aClass [
+    <primitive: 100>
 ]

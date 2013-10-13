@@ -27,6 +27,10 @@ Dict >> keyOf: aValue [
     ^ nil.    
 ]
 
+Dict >> at: aKey [
+    ^ self atKey: aKey
+]
+
 Dict >> atKey: aKey [
     self do: [:value | 
         ((value at: 1) = aKey) ifTrue: [

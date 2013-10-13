@@ -3,56 +3,24 @@ MirrorFactory
     instanceSpecification: #(#pointers #words );
     instanceVariables: #(#mirrorDictionary).
 
+MirrorFactory >> initialize [
+    mirrorDictionary := Dict new.
+]
+
 MirrorFactory >> on: aBaseObject [
     |mirror|
     mirror := (self directMirrorOn: aBaseObject).
     (mirror = nil) ifTrue: [
-        ^ self newOn: aBaseObject.    
+        ^ Mirror newOn: aBaseObject.    
     ] ifFalse: [
         ^ mirror.
     ].
 ]
 
 MirrorFactory >> directMirrorOn: aBaseObject [
-    <PrimitiveCall mirrorDirectMirrorOn>
-]
-
-MirrorFactory >> directClassOn: aBaseObject [
-    <PrimitiveCall mirrorDirectClassOn>
-]
-
-MirrorFactory >> directSuperOn: aBaseClass [
-    <PrimitiveCall mirrorDirectSuperOn>
+    ^ mirrorDictionary at: aBaseObject
 ]
 
 MirrorFactory >> setDirectMirror: mirror on: aBaseObject [
-    <PrimitiveCall mirrorSetDirectMirrorOn>
-]
-
-MirrorFactory >> setDirectClass: class on: aBaseObject [
-    <PrimitiveCall mirrorSetDirectClassOn>
-]
-
-MirrorFactory >> setDirectSuper: class on: aBaseClass [
-    <PrimitiveCall mirrorSetDirectSuperOn>
-]
-
-MirrorFactory >> setDirectClassName: aName [
-    <PrimitiveCall mirrorSetDirectClassNameOn>
-]
-
-MirrorFactory >> setDirectInstanceSize: size on: baseObj [
-    <PrimitiveCall mirrorSetDirectInstanceSizeOn>
-]
-
-MirrorFactory >> obj: aBaseObj atIndex: index [
-    <PrimitiveCall mirrorAtIndex>
-]
-
-MirrorFactory >> obj: aBaseObj atIndex: index put: anObject [
-    <PrimitiveCall mirrorAtIndexPut>
-]
-
-MirrorFactory >> obj: aBaseObj performOnIndex: Index withArguments: args [
-    <PrimitiveCall mirrorPerformOnIndexWithArguments>
+    mirrorDictionary at: aBaseObject put: mirror
 ]
