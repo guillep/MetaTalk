@@ -4,6 +4,7 @@ Number
 
 Number >> = aMagnitude [ 
     <primitive: 7>
+	^ false
 ]
 
 Number >> + aNumber [
@@ -36,7 +37,7 @@ Number >> > aNumber [
 
 Number >> to: aNumber [
     |iterator end list|
-    list := {}.
+    list := List new.
     iterator := self.
     end := aNumber asNumber.
     [iterator < (end + 1).] whileTrue: [

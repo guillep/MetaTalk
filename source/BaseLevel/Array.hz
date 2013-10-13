@@ -13,3 +13,32 @@ Array >> at: index put: anObject [
 Array >> size [
     <primitive: 62>
 ]
+
+Array >> asString [
+    |str|
+    str := 'Array( '.
+    self do: [:item | str := str , item asString , '. '.].
+    ^ str , ')'.
+]
+
+Array >> do: aBlock [
+    1 to: self size do: [ :i | aBlock valueWithArgs: { self at: i }]
+]
+
+Array >> indexAndValuesDo: aBlock [
+    |index|
+    index := 1.
+    self do: [:value |
+        aBlock valueWithArgs: {index. value.}.
+        index := index + 1.
+    ].    
+]
+
+Array >> indexOf: anObject [
+    self indexAndValuesDo: [:index :value |
+        (value = anObject) ifTrue: [
+            ^ index.
+        ].
+    ].
+    ^ nil.
+]

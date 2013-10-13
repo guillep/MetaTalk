@@ -2,10 +2,10 @@ Dict
     superclass: #List.
 
 Dict >> add: aKeyValueList [
-    (aKeyValueList asList size = 2) ifTrue: [
-            super add: aKeyValueList.
+    (aKeyValueList size = 2) ifTrue: [
+        super add: aKeyValueList.
     ] ifFalse: [
-            ^ nil.
+        ^ nil.
     ].
 ]
 
@@ -40,10 +40,10 @@ Dict >> atKey: aKey [
     ^ nil.
 ]
 
-Dict >> atKey: aKey put: aValue [
+Dict >> at: aKey put: aValue [
     self do: [:value | 
         ((value at: 1) = aKey) ifTrue: [
-            value at: 2 put: aValue.
+            ^ value at: 2 put: aValue.
         ].
     ].
     self add: {aKey. aValue.}.

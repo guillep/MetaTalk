@@ -33,6 +33,10 @@ Object >> print [
     self asString print
 ]
 
+Object >> size [
+    ^ 0
+]
+
 Object >> quit [
 	"Exit from the system."
 	<primitive: 113>

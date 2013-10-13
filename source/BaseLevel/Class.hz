@@ -12,7 +12,9 @@ Class >> allocate: aSize [
 ]
 
 Class >> new [
-    ^ self allocate initialize.
+    ^ self allocate
+		initialize;
+		yourself.
 ]
 
 Class >> new: aSize [

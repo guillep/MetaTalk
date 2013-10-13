@@ -10,8 +10,8 @@ List >> initialize [
 ]
 
 List >> size [
-    head == nil ifTrue: [ ^ 0 ].
-    tail == nil ifTrue: [ ^ 1 ].
+    nil = head ifTrue: [ ^ 0 ].
+    nil = tail ifTrue: [ ^ 1 ].
     ^ 1 + tail size.
 ]
 
@@ -28,10 +28,9 @@ List >> tail [
 ]
 
 List >> add: anObject [
-    | newTail |
-    self isEmpty ifTrue: [ head := anObject ].
-    tail == nil ifTrue: [ tail := anObject asList ].
-    tail add: anObject.
+    self isEmpty ifTrue: [ ^ head := anObject ].
+    nil = tail ifTrue: [ tail := List new add: anObject; yourself. ^ anObject ].
+    ^ tail add: anObject.
 ]
 
 List >> remove: anObject [
@@ -86,13 +85,10 @@ List >> basicAddAll: aList [
 ]
    
 List >> do: aBlock [
-    |size iterator|
-    size := self size.
-    iterator := 1.
-    [(iterator = (size+1)) not.] whileTrue: [
-        aBlock valueWithArgs: {self at: iterator.}.
-        iterator := iterator + 1.
-    ].
+    nil = head ifTrue: [ ^ nil ].
+	aBlock valueWithArgs: { head }.
+	nil = tail ifTrue: [ ^ nil ].
+	tail do: aBlock.
 ]
     
 List >> indexAndValuesDo: aBlock [
@@ -106,9 +102,9 @@ List >> indexAndValuesDo: aBlock [
 
 List >> asString [
     |str|
-    str := '{ '.
+    str := 'List( '.
     self do: [:item | str := str , item asString , '. '.].
-    ^ str , '}'.
+    ^ str , ')'.
 ]
 
 List >> asList [
