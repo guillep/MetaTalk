@@ -36,7 +36,6 @@ echo -e "
 \"Load a seed from the folder of the downloaded sources\"
 seed := MttSeed new
     fromDirectoryNamed: '../source/BaseLevel';
-	 except: [ :f | (f basename beginsWith: 'Initialization.hz') ];
     buildSeed.
 
 \"Create an object space that will use an AST evaluator to run some code\"
@@ -47,10 +46,10 @@ objectSpace mirrorFactory: MttMirrorFactory new.
 objectSpace methodDictionaryBuilder: MttMethodDictionaryMirror.
 
 \"Create a builder, and tell it to bootstrap. Voilá, the objectSpace will be full\"
-builder := MttBuilder new.
+builder := MttMetaLevelBuilder new.
 builder objectSpace: objectSpace.
-builder kernelSpec: seed.
-builder	buildKernel.
+builder baseLevelSpec: baseLevel.
+builder buildKernel.
 
 process := objectSpace createProcessWithPriority: 3 doing: MttMetatalk world baseLevelValidation.
 objectSpace installAsActiveProcess: process.
