@@ -34,14 +34,14 @@ echo "Configuration Loaded. Opening script..."
 
 echo -e "
 \"Load a seed from the folder of the downloaded sources\"
-seed := MttSeed new
+baseLevel := MttSeed new
     fromDirectoryNamed: '../source/BaseLevel';
     buildSeed.
 
 \"Create an object space that will use an AST evaluator to run some code\"
 objectSpace := AtObjectSpace new.
 objectSpace worldConfiguration: MttMetatalk world.
-objectSpace interpreter: (AtASTEvaluator new codeProvider: seed; yourself).
+objectSpace interpreter: (AtASTEvaluator new codeProvider: baseLevel; yourself).
 objectSpace mirrorFactory: MttMirrorFactory new.
 objectSpace methodDictionaryBuilder: MttMethodDictionaryMirror.
 
